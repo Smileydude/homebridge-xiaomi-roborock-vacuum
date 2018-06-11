@@ -1,7 +1,7 @@
 {
-  "name": "homebridge-xiaomi-roborock-vacuum",
+  "name": "homebridge-xiaomi-roborock-vacuum-zones",
   "version": "0.3.2",
-  "description": "Xiaomi Vacuum Cleaner, 1st (Mi Robot) and 2nd (Roborock S50), plugin for Homebridge.",
+  "description": "Xiaomi Vacuum Cleaner, 1st (Mi Robot) and 2nd (Roborock S50), plugin for Homebridge. With added zone configuration",
   "license": "MIT",
   "keywords": [
     "homebridge-plugin",
@@ -12,17 +12,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nicoh88/homebridge-xiaomi-roborock-vacuum.git"
+    "url": "git+https://github.com/Smileydude/homebridge-xiaomi-roborock-vacuum.git"
   },
   "bugs": {
-    "url": "https://github.com/nicoh88/homebridge-xiaomi-roborock-vacuum/issues"
+    "url": "https://github.com/Smileydude/homebridge-xiaomi-roborock-vacuum/issues"
   },
-  "homepage": "https://github.com/nicoh88/homebridge-xiaomi-roborock-vacuum",
+  "homepage": "https://github.com/Smileydude/homebridge-xiaomi-roborock-vacuum",
   "engines": {
     "node": ">=6.0.0",
     "homebridge": ">=0.4.1"
   },
   "dependencies": {
-    "miio": "git://github.com/nicoh88/miio.git#master"
+    "miio": "git://github.com/Smileydude/miio.git#master"
   }
 }
