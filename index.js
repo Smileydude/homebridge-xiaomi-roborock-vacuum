@@ -96,13 +96,13 @@ function XiaomiRoborockVacuum(log, config) {
 
     that.fanService = new Service.Fan(that.name);
         that.fanService
-            .getCharacteristic(Characteristic.On)
-            .on('get', that.getCleaning.bind(that))
-            .on('set', that.setCleaning.bind(that));
-        that.fanService
             .getCharacteristic(Characteristic.RotationSpeed)
             .on('get', that.getSpeed.bind(that))
             .on('set', that.setSpeed.bind(that));
+        that.fanService
+            .getCharacteristic(Characteristic.On)
+            .on('get', that.getCleaning.bind(that))
+            .on('set', that.setCleaning.bind(that));
         that.services.push(that.fanService);
 
     that.batteryService = new Service.BatteryService(that.name + ' Battery');
