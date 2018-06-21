@@ -26,12 +26,12 @@ function XiaomiRoborockVacuum(log, config) {
     that.device = null;
     that.startup = true;
 
-    // set zone, if not set do whole floor. Must be defined as a normal cleanup will clear map and might rotate it
+    // set zones, if not set do whole floor. Must be defined as a normal cleanup will clear map and might rotate it
     // Maps are always 51200 x 51200. The charger/starting location is always the centre; so 25600, 25600
-    if (config.zone) {
-        that.zone = config.zone;
+    if (config.zones) {
+        that.zones = config.zones;
     } else {
-        that.zone = [51200, 51200, 0, 0];
+        that.zones = [[51200, 51200, 0, 0]];
     }
 
     that.cleaning = false;
@@ -460,7 +460,13 @@ XiaomiRoborockVacuum.prototype = {
 
         if(state) {
             log.info('ACTION | Start cleaning.');
-            that.device.activateZoneClean(that.zone.concat(1));
+
+            var zonesWithSingleRepeat = [];
+            for(var zone of that.zones) {
+                zonesWithSingleRepeat.push(zone.concat(1));
+            }
+            
+            that.device.activateZoneClean(zonesWithSingleRepeat);
             that.cleaning = true
             // Cleaning => leaves dock
             if (that.dock) {
