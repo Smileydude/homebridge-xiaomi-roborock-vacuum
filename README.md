@@ -14,7 +14,7 @@ You are going to want a zone to represent all the zones, so you can send it off 
 
 #### Example
 
-![layout](example.png "Layout")
+<img src="https://github.com/Smileydude/homebridge-xiaomi-roborock-vacuum/blob/master/example.PNG?raw=true" alt="Layout example" width="650">
 
 ```json
 "accessories": [
