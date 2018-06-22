@@ -1,7 +1,138 @@
-# homebridge-xiaomi-roborock-vacuum
+# Homebridge-xiaomi-roborock-vacuum
 
-Based off nicoh88 xiaomi robot vacuum library with added zone configurations
-https://github.com/nicoh88/homebridge-xiaomi-roborock-vacuum
+Based off [nicoh88 xiaomi robot vacuum library](https://github.com/nicoh88/homebridge-xiaomi-roborock-vacuum) with added zone configurations
+
+## Config Overview
+
+Currently you need to replicate the config for each room, and just change the zones coordinates. You can get the coordinates by either trial and error, then checking the map after sending it off or send it off and and take a screen shot of the zone. Print it out and figure out the scale, and calculate all the zones.
+
+The dock is around the middle [25600, 25600], the whole map can get as big as 51200 x 51200. Mine is no where near that. The coordinate order is [bottom-left-x, bottom-left-y, top-right-x, top-right-y]
+
+You are going to want a zone to represent all the zones, so you can send it off to clean each room in one go. This should still be broken up into sections, if you do it in one big zone it does a horrible job. (atleast from my experince)
+
+**If your map gets screwed up because it got stick or you picked it up, just keep starting new full cleanups till it matches again ahould rotate by 90 degrees each time**
+
+#### Example
+
+![layout](example.png "Layout")
+
+```json
+"accessories": [
+    {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "Bathroom Vacuum",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "zones": [
+                [
+                    23000,
+                    26900,
+                    26000,
+                    29000
+                ]
+            ]
+        },
+        {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "Kitchen Vacuum",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "zones": [
+                [
+                    20010,
+                    28200,
+                    22035,
+                    29955
+                ],
+                [
+                    22090,
+                    27160,
+                    23325,
+                    32035
+                ]
+            ]
+        },
+        {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "Bedroom Vacuum",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "zones": [
+                [
+                    23000,
+                    22285,
+                    26000,
+                    26910
+                ]
+            ]
+        },
+        {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "Living Room Vacuum",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "zones": [
+                [
+                    19360,
+                    22285,
+                    23000,
+                    27745
+                ]
+            ]
+        },
+        {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "House Vacuum",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "zones": [
+                [
+                    19360,
+                    22285,
+                    23000,
+                    27745
+                ],
+                [
+                    23000,
+                    22285,
+                    26000,
+                    26910
+                ],
+                [
+                    20010,
+                    28200,
+                    22035,
+                    29955
+                ],
+                [
+                    22090,
+                    27160,
+                    23325,
+                    32035
+                ],
+                [
+                    23000,
+                    26900,
+                    26000,
+                    29000
+                ]
+            ]
+        }
+    ]
+```
+
+#### Token
+There are [many ways](https://github.com/jghaanstra/com.xiaomi-miio/blob/master/docs/obtain_token.md). I followed the none jailbroken iphone way using ibackup viewer
 
 ## Lisense
 The MIT License (MIT)
