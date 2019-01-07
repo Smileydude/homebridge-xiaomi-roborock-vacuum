@@ -6,6 +6,7 @@ Based off [nicoh88 xiaomi robot vacuum library](https://github.com/nicoh88/homeb
 
 Currently you need to replicate the config for each room, and just change the zones coordinates. You can get the coordinates by either trial and error, then checking the map after sending it off or send it off and and take a screen shot of the zone. Print it out and figure out the scale, and calculate all the zones.
 
+
 The dock is around the middle [25600, 25600], the whole map can get as big as 51200 x 51200. Mine is no where near that. The coordinate order is [bottom-left-x, bottom-left-y, top-right-x, top-right-y]
 
 You are going to want a zone to represent all the zones, so you can send it off to clean each room in one go. This should still be broken up into sections, if you do it in one big zone it does a horrible job. (atleast from my experince)
@@ -156,4 +157,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Optional parameters
+| Name of parameter | Default value | Notes |
+|---|---|---|
+| `pause` | false | when set to true, HomeKit shows an additional switch for "pause" - switch is on, when pause is possible |
+| `dock` | false |  when set to true, HomeKit shows an occupancy sensor, if robot is in the charging dock |
+
+
+## Xiaomi Token
+To use this plugin, you have to read the "token" of the xiaomi vacuum robots. Here are some detailed instructions:
+- :us::gb: - [python-miio - Getting started](https://python-miio.readthedocs.io/en/latest/discovery.html)
+- :de: - [Apple HomeKit Forum - HomeKit.Community](https://forum.smartapfel.de/forum/thread/370-xiaomi-token-auslesen/)
+- :de: - [Homematic-Guru.de](https://homematic-guru.de/xiaomi-vacuum-staubsauger-roboter-mit-homematic-steuern)
 
