@@ -1,6 +1,6 @@
 {
   "name": "homebridge-xiaomi-roborock-vacuum-zones",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "Xiaomi Vacuum Cleaner, plugin for Homebridge. With added zone configuration",
   "license": "MIT",
   "keywords": [

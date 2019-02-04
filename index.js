@@ -26,12 +26,15 @@ function XiaomiRoborockVacuum(log, config) {
     that.device = null;
     that.startup = true;
 
-    // set zones, if not set do whole floor. Must be defined as a normal cleanup will clear map and might rotate it
-    // Maps are always 51200 x 51200. The charger/starting location is always the centre; so 25600, 25600
+    // set zones, if not set do whole floor
     if (config.zones) {
         that.zones = config.zones;
     } else {
-        that.zones = [[51200, 51200, 0, 0]];
+        if(that.model == "rockrobo.vacuum.v1") {
+            // Must be defined as a normal cleanup will clear map and might rotate it
+            // Maps are always 51200 x 51200. The charger/starting location is always the centre; so 25600, 25600
+            that.zones = [[51200, 51200, 0, 0]];
+         };
     }
 
     that.speedmodes_gen1 = [
@@ -471,14 +474,22 @@ XiaomiRoborockVacuum.prototype = {
         if(state) {
             if(!that.cleaning) {
                 log.info('ACT setCleaning | ' + that.model + ' | Start cleaning.');
-                
-                var zonesWithSingleRepeat = [];
-                for(var zone of that.zones) {
-                    zonesWithSingleRepeat.push(zone.concat(1));
+              
+                if (that.zones) {
+                    var zonesWithRepeats = [];
+                    for(var zone of that.zones) {
+                        if (zone.length == 4) {
+                            zonesWithRepeats.push(zone.concat(1));
+                        } else if (zone.length == 5) {
+                            zonesWithRepeats.push(zone);
+                        }
+                    }
+                    that.device.activateZoneClean(zonesWithRepeats);
+                } else {
+                    // no zones configured so clean the whole area
+                    that.device.activateCleaning();
                 }
                 
-                that.device.activateZoneClean(zonesWithSingleRepeat);
-
                 that.cleaning = true
                 that.lastrobotcleaning = that.cleaning;
                 that.charging = false;
