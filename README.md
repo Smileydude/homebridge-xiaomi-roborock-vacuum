@@ -1,4 +1,4 @@
-# Homebridge-xiaomi-roborock-vacuum
+# Homebridge-xiaomi-roborock-vacuum-zones
 
 [![PayPal Donate](https://img.shields.io/badge/PayPal-Donate-blue.svg)](https://www.paypal.me/smileydude)
 [![GitHub last commit](https://img.shields.io/github/last-commit/smileydude/homebridge-xiaomi-roborock-vacuum.svg)](https://github.com/smileydude/homebridge-xiaomi-roborock-vacuum)
