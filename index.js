@@ -25,6 +25,7 @@ function XiaomiRoborockVacuum(log, config) {
     that.dock = config.dock;
     that.device = null;
     that.startup = true;
+    that.target = config.target;
 
     // set zones, if not set do whole floor
     if (config.zones) {
@@ -475,7 +476,9 @@ XiaomiRoborockVacuum.prototype = {
             if(!that.cleaning) {
                 log.info('ACT setCleaning | ' + that.model + ' | Start cleaning.');
               
-                if (that.zones) {
+                if (that.target) {
+                    that.device.activateGoToTarget(that.target);
+                } else if (that.zones) {
                     var zonesWithRepeats = [];
                     for(var zone of that.zones) {
                         if (zone.length == 4) {
@@ -486,9 +489,8 @@ XiaomiRoborockVacuum.prototype = {
                     }
                     that.device.activateZoneClean(zonesWithRepeats);
                 } else {
-                    // no zones configured so clean the whole area
-                    that.device.activateCleaning();
-                }
+                    // no zones/target configured so clean the whole area
+                    that.device.activateCleaning();                }
                 
                 that.cleaning = true
                 that.lastrobotcleaning = that.cleaning;

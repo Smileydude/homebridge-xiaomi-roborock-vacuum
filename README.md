@@ -41,6 +41,27 @@ You can add in an extra number to a zone for the amount of times you want it to 
     ]
 ```
 
+You can also add in a target option and configure the x,y coordinate you want the robot to go to.
+**Make sure to not include the zones config, as it will override the target config**
+
+```json
+"accessories": [
+    {
+            "accessory": "XiaomiRoborockVacuum",
+            "name": "Bathroom Vacuum Running Twice",
+            "ip": "ip",
+            "token": "token",
+            "dock": false,
+            "pause": false,
+            "target": [
+                23000,
+                29000
+            ]
+        }
+    ]
+```
+
+
 #### Example
 
 <img src="https://github.com/Smileydude/homebridge-xiaomi-roborock-vacuum/blob/master/example.PNG?raw=true" alt="Layout example" width="650">
