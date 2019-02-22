@@ -458,8 +458,33 @@ XiaomiRoborockVacuum.prototype = {
             return;
         }
 
-        log.info('INF getCleaning | ' + that.model + ' | Cleaning is ' + that.lastrobotcleaning + '.')
-        callback(null, that.lastrobotcleaning);
+        if(that.cleaning) {
+            if (that.zones) {
+                if (that.zoneName == that.name) {
+                    log.info('INF get zone is cleaning | ' + that.model);
+                    callback(true);
+                    return;
+                } else {
+                    log.info('INF get zone not active | ' + that.model);
+                    callback(false);
+                    return;
+                }
+            } else {
+                if (that.zoneName == '') {
+                    log.info('INF get no zones and vacuum is on with no zone | ' + that.model);
+                    callback(true);
+                    return;
+                } else {
+                    log.info('INF get no zones configured, and a zone is running | ' + that.model);
+                    callback(false);
+                    return;
+                }
+            }
+        } else {
+            log.info('INF get not cleaning | ' + that.model);
+            callback(false);
+            return;
+        }
     },
 
     setCleaning: function(state, callback) {
