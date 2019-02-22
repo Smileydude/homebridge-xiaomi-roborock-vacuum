@@ -6,6 +6,9 @@
 [![npm version](https://badge.fury.io/js/homebridge-xiaomi-roborock-vacuum-zones.svg)](https://badge.fury.io/js/homebridge-xiaomi-roborock-vacuum-zones)
 [![dependencies Status](https://david-dm.org/smileydude/homebridge-xiaomi-roborock-vacuum.svg)](https://david-dm.org/smileydude/homebridge-xiaomi-roborock-vacuum.svg)
 
+## Demonstartion 
+https://www.youtube.com/watch?v=NTiA0LtaER4&t=32s
+
 ## Config Overview
 
 Currently you need to replicate the config for each room, and just change the zones coordinates. You can get the coordinates by either trial and error, then checking the map after sending it off or send it off and and take a screen shot of the zone. Print it out and figure out the scale, and calculate all the zones.
