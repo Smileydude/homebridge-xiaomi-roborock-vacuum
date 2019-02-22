@@ -675,7 +675,11 @@ XiaomiRoborockVacuum.prototype = {
         log.debug('DEB setPausestate | ' + that.model + ' | Pause set it to ' + state + '.');
         if(state) {
             log.info('ACT setPausestate | ' + that.model + ' | Resume cleaning.');
-            that.device.activateCleaning();
+            if (that.zones) {
+                that.device.resumeZoneCleanup();
+            } else {
+                that.device.activateCleaning();
+            }
             if (that.pause) { 
                 that.pausepossible = true 
                 that.lastrobotpausecleaning = that.pausepossible;
