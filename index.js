@@ -235,12 +235,11 @@ function XiaomiRoborockVacuum(log, config) {
             if(robotcleaning) {
                 log.info('INF changedCleaning | ' + that.model + ' | Cleaning was started.');
                 that.cleaning = true;
-                that.fanService.getCharacteristic(Characteristic.On).updateValue(that.cleaning);
             } else {
                 log.info('INF changedCleaning | ' + that.model + ' | Cleaning was stopped.');
                 that.cleaning = false;
-                that.fanService.getCharacteristic(Characteristic.On).updateValue(that.cleaning);
             }
+            that.checkIfZoneEnabled();
         }
     }
 
@@ -262,38 +261,37 @@ function XiaomiRoborockVacuum(log, config) {
         }
     }
 
-    this.changedBattery = function(level) {
-        log.debug('DEB changedBattery | ' + that.model + ' | BatteryLevel ' + level + '%');
-        that.battery = level
-        that.batteryService.getCharacteristic(Characteristic.BatteryLevel).updateValue(that.battery);
-        that.batteryService.getCharacteristic(Characteristic.StatusLowBattery).updateValue((that.battery < 20) ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
+    this.changedZone = function(zoneName) {
+        log.debug('DEB changedZone | ' + that.model + ' | zoneName ' + zoneName);
+        if(zoneName !== that.zoneName) {
+            log.info('MON changedCleaning | ' + that.model + ' | zone has changed, is now ' + zoneName);
+            that.zoneName = zoneName;
+            that.checkIfZoneEnabled();
+        }
     }
 
-    this.changedCharging = function(robotcharging) {
-        log.debug('DEB changedCharging | ' + that.model + ' | ChargingState ' + robotcharging);
-        if(robotcharging !== that.lastrobotcharging) {
-            log.info('MON changedCharging | ' + that.model + ' | ChargingState has changed, is now ' + robotcharging);
-            that.lastrobotcharging = robotcharging;
-
-            if(robotcharging) {
-                log.info('INF changedCharging | ' + that.model + ' | Charging is active.');
-                that.charging = true;
-                that.batteryService.getCharacteristic(Characteristic.ChargingState).updateValue(Characteristic.ChargingState.CHARGING);
-                if (that.dock) {
-                    log.info('INF changedCharging | ' + that.model + ' | Robot was docked.');
-                    that.docked = true;
-                    that.dockService.getCharacteristic(Characteristic.OccupancyDetected).updateValue(that.docked);
+    this.checkIfZoneEnabled = function() {
+        if(that.cleaning) {
+            if (that.zones) {
+                if (that.zoneName == that.name) {
+                    log.info('INF zone is cleaning | ' + that.model);
+                    that.fanService.getCharacteristic(Characteristic.On).updateValue(true);
+                } else {
+                    log.info('INF zone not active | ' + that.model);
+                    that.fanService.getCharacteristic(Characteristic.On).updateValue(false);
                 }
             } else {
-                log.info('INF changedCharging | ' + that.model + ' | Charging was canceled.');
-                that.charging = false;
-                that.batteryService.getCharacteristic(Characteristic.ChargingState).updateValue(Characteristic.ChargingState.NOT_CHARGING);
-                if (that.dock) {
-                    log.info('INF changedCharging | ' + that.model + ' | Robot not anymore in dock.');
-                    that.docked = false;
-                    that.dockService.getCharacteristic(Characteristic.OccupancyDetected).updateValue(that.docked);
+                if (that.zoneName == '') {
+                    log.info('INF no zones and vacuum is on with no zone | ' + that.model);
+                    that.fanService.getCharacteristic(Characteristic.On).updateValue(true);
+                } else {
+                    log.info('INF no zones configured, and a zone is running | ' + that.model);
+                    that.fanService.getCharacteristic(Characteristic.On).updateValue(false);
                 }
             }
+        } else {
+            log.info('INF not cleaning | ' + that.model);
+            that.fanService.getCharacteristic(Characteristic.On).updateValue(false);
         }
     }
 
@@ -424,6 +422,9 @@ XiaomiRoborockVacuum.prototype = {
                         if (state['key'] == "batteryLevel") {
                             that.changedBattery(state['value'])
                         }
+                        if (state['key'] == "zoneName") {
+                            that.changedZone(state['value'])
+                        }
                     });
 
 
@@ -487,10 +488,11 @@ XiaomiRoborockVacuum.prototype = {
                             zonesWithRepeats.push(zone);
                         }
                     }
-                    that.device.activateZoneClean(zonesWithRepeats);
+                    that.device.activateZoneClean(that.name, zonesWithRepeats);
                 } else {
                     // no zones/target configured so clean the whole area
-                    that.device.activateCleaning();                }
+                    that.device.activateCleaning();
+                }
                 
                 that.cleaning = true
                 that.lastrobotcleaning = that.cleaning;

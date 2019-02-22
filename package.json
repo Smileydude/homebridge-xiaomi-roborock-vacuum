@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-xiaomi-roborock-vacuum-zones",
+  "name": "homebridge-xiaomi-roborock-vacuum-zones-beta",
   "version": "0.4.2",
   "description": "Xiaomi Vacuum Cleaner, plugin for Homebridge. With added zone configuration",
   "license": "MIT",
@@ -25,6 +25,6 @@
     "homebridge": ">=0.4.1"
   },
   "dependencies": {
-    "miio": "git://github.com/Smileydude/miio.git#master"
+    "miio": "git://github.com/Smileydude/miio.git#zone-tracking"
   }
 }
